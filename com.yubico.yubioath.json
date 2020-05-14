@@ -200,8 +200,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/Yubico/python-fido2/releases/download/0.7.0/fido2-0.7.0.tar.gz",
-          "sha256": "47b02852780849bb4bb698b9727d61970ee77a83eb25715fe7c6235ebd648d87"
+          "url": "https://github.com/Yubico/python-fido2/releases/download/0.8.1/fido2-0.8.1.tar.gz",
+          "sha256": "449068f6876f397c8bb96ebc6a75c81c2692f045126d3f13ece21d409acdf7c3"
         }
       ]
     },

@@ -29,8 +29,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/libusb/libusb/releases/download/v1.0.22/libusb-1.0.22.tar.bz2",
-          "sha256": "75aeb9d59a4fdb800d329a545c2e6799f732362193b465ea198f2aa275518157"
+          "url": "https://github.com/libusb/libusb/releases/download/v1.0.23/libusb-1.0.23.tar.bz2",
+          "sha256": "db11c06e958a82dac52cf3c65cb4dd2c3f339c8a988665110e0d24d19312ad8d"
         }
       ]
     },
@@ -52,8 +52,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/LudovicRousseau/PCSC/archive/pcsc-1.8.25.tar.gz",
-          "sha256": "4dc994bafa88fa348853fba07e787c317c030a986fd0e9f30efc0d160fca6d36"
+          "url": "https://github.com/LudovicRousseau/PCSC/archive/pcsc-1.8.26.tar.gz",
+          "sha256": "87da93642ba45fdbec07462c9ffabecbdda02407719fa21402f20fa35910425a"
         }
       ]
     },
@@ -63,8 +63,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/thp/pyotherside/archive/1.5.8.tar.gz",
-          "sha256": "7e4ba2b601eb2d67618e0355cc249ed7d2555940af24f84bb4cbf31eb7df7808"
+          "url": "https://github.com/thp/pyotherside/archive/1.5.9.tar.gz",
+          "sha256": "189cb0b973e40fcb6b95fd51b0bcd6cc8494b514d49ffe966ec488cf05bbf51e"
         },
         {
           "type": "patch",
@@ -84,8 +84,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "http://download.sourceforge.net/swig/swig-4.0.0.tar.gz",
-          "sha256": "e8a39cd6437e342cdcbd5af27a9bf11b62dc9efec9248065debcb8276fcbb925"
+          "url": "http://download.sourceforge.net/swig/swig-4.0.1.tar.gz",
+          "sha256": "7a00b4d0d53ad97a14316135e2d702091cd5f193bb58bcfcd8bc59d41e7887a9"
         }
       ]
     },
@@ -130,8 +130,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/pallets/click/archive/7.0.tar.gz",
-          "sha256": "7cd752d4b5621bddf6428ca00ef5c2cd9b4b77bc41076a69eff51cbbfd4f8646"
+          "url": "https://github.com/pallets/click/archive/7.1.2.tar.gz",
+          "sha256": "da626c7e5fa918a8c9bf9b5c0c0255b55469ca6b0c3cb2318ea0dc7eb05a56c3"
         }
       ]
     },
@@ -200,8 +200,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/Yubico/python-fido2/releases/download/0.7.0/fido2-0.7.0.tar.gz",
-          "sha256": "47b02852780849bb4bb698b9727d61970ee77a83eb25715fe7c6235ebd648d87"
+          "url": "https://github.com/Yubico/python-fido2/releases/download/0.8.1/fido2-0.8.1.tar.gz",
+          "sha256": "449068f6876f397c8bb96ebc6a75c81c2692f045126d3f13ece21d409acdf7c3"
         }
       ]
     },
@@ -244,8 +244,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://developers.yubico.com/yubioath-desktop/Releases/yubioath-desktop-5.0.3.tar.gz",
-          "sha256": "33f40391a92645e054e6b480f9b7959195868fe0e3de329135ca4056eb6912bc"
+          "url": "https://developers.yubico.com/yubioath-desktop/Releases/yubioath-desktop-5.0.4.tar.gz",
+          "sha256": "9020d80590ecc50349905ff68dd6b94c58e6fd632d335a2b775a3ef3764788ab"
         },
         {
           "type": "patch",

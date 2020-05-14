@@ -63,8 +63,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/thp/pyotherside/archive/1.5.8.tar.gz",
-          "sha256": "7e4ba2b601eb2d67618e0355cc249ed7d2555940af24f84bb4cbf31eb7df7808"
+          "url": "https://github.com/thp/pyotherside/archive/1.5.9.tar.gz",
+          "sha256": "189cb0b973e40fcb6b95fd51b0bcd6cc8494b514d49ffe966ec488cf05bbf51e"
         },
         {
           "type": "patch",

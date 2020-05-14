@@ -244,8 +244,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://developers.yubico.com/yubioath-desktop/Releases/yubioath-desktop-5.0.3.tar.gz",
-          "sha256": "33f40391a92645e054e6b480f9b7959195868fe0e3de329135ca4056eb6912bc"
+          "url": "https://developers.yubico.com/yubioath-desktop/Releases/yubioath-desktop-5.0.4.tar.gz",
+          "sha256": "9020d80590ecc50349905ff68dd6b94c58e6fd632d335a2b775a3ef3764788ab"
         },
         {
           "type": "patch",

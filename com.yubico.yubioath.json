@@ -6,7 +6,11 @@
   "command": "yubioath-desktop",
   "cleanup": [
     "/include",
-    "/lib/pkgconfig"
+    "/lib/pkgconfig",
+    "/share/doc",
+    "/share/man",
+    "*.la",
+    "*.a"
   ],
   "finish-args": [
     "--socket=x11",

@@ -210,6 +210,20 @@
       ]
     },
     {
+      "name": "poetry",
+      "buildsystem": "simple",
+      "build-commands": [
+        "pip3 install --prefix /app --no-deps ."
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/python-poetry/poetry/archive/refs/tags/1.1.6.tar.gz",
+          "sha256": "28234a38cdd4a4196b5dcba867d566c0412d203ea655783f7d11441aed2b5ee8"
+        }
+      ]
+    },
+    {
       "name": "yubikey-manager",
       "buildsystem": "simple",
       "build-commands": [

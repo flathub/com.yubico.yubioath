@@ -34,8 +34,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/libusb/libusb/releases/download/v1.0.23/libusb-1.0.23.tar.bz2",
-          "sha256": "db11c06e958a82dac52cf3c65cb4dd2c3f339c8a988665110e0d24d19312ad8d"
+          "url": "https://github.com/libusb/libusb/releases/download/v1.0.24/libusb-1.0.24.tar.bz2",
+          "sha256": "7efd2685f7b327326dcfb85cee426d9b871fd70e22caa15bb68d595ce2a2b12a"
         }
       ]
     },
@@ -57,8 +57,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/LudovicRousseau/PCSC/archive/pcsc-1.8.26.tar.gz",
-          "sha256": "87da93642ba45fdbec07462c9ffabecbdda02407719fa21402f20fa35910425a"
+          "url": "https://github.com/LudovicRousseau/PCSC/archive/refs/tags/1.9.1.tar.gz",
+          "sha256": "1eaad042a8a8f9d398bf3fc27a35e516e4f0b90437a0e11a46d280ddd9c5848d"
         }
       ]
     },
@@ -103,8 +103,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/LudovicRousseau/pyscard/archive/release-1.9.9.tar.gz",
-          "sha256": "6296164a7133980a4d388bdecbec6f98f78cacde677447751ad34e9608b0d8cb"
+          "url": "https://github.com/LudovicRousseau/pyscard/archive/refs/tags/2.0.0.tar.gz",
+          "sha256": "314d44a46d14c25c532c4679c116991ae720d62bce3739e82a9b2a34acd86b18"
         },
         {
           "type": "patch",
@@ -205,8 +205,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/Yubico/python-fido2/releases/download/0.8.1/fido2-0.8.1.tar.gz",
-          "sha256": "449068f6876f397c8bb96ebc6a75c81c2692f045126d3f13ece21d409acdf7c3"
+          "url": "https://github.com/Yubico/python-fido2/releases/download/0.9.1/fido2-0.9.1.tar.gz",
+          "sha256": "8680ee25238e2307596eb3900a0f8c0d9cc91189146ed8039544f1a3a69dfe6e"
         }
       ]
     },
@@ -233,8 +233,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/Yubico/yubikey-manager/archive/yubikey-manager-3.1.1.tar.gz",
-          "sha256": "de32cd8a6b1d30c038bdba806c1d0b9eb9b4540c789bb09b13e65f99f2d4c482"
+          "url": "https://github.com/Yubico/yubikey-manager/releases/download/4.0.2/yubikey-manager-4.0.2.tar.gz",
+          "sha256": "998f804a66695feeb3a48ba200320850243aa605d6d4edcb30bea4cc349aea21"
         }
       ]
     },
@@ -249,8 +249,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://developers.yubico.com/yubioath-desktop/Releases/yubioath-desktop-5.0.4.tar.gz",
-          "sha256": "9020d80590ecc50349905ff68dd6b94c58e6fd632d335a2b775a3ef3764788ab"
+          "url": "https://developers.yubico.com/yubioath-desktop/Releases/yubioath-desktop-5.0.5.tar.gz",
+          "sha256": "0fd4a6d53b078803749b4dbf1e6f53217cfb80cc312b640c80a0c49b6037ba17"
         },
         {
           "type": "patch",

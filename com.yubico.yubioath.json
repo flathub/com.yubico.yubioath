@@ -210,7 +210,7 @@
       ]
     },
     {
-      "name": "poetry",
+      "name": "poetry-core",
       "buildsystem": "simple",
       "build-commands": [
         "pip3 install --prefix /app --no-deps ."
@@ -218,8 +218,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/python-poetry/poetry/archive/refs/tags/1.1.6.tar.gz",
-          "sha256": "28234a38cdd4a4196b5dcba867d566c0412d203ea655783f7d11441aed2b5ee8"
+          "url": "https://github.com/python-poetry/poetry-core/archive/refs/tags/1.0.3.tar.gz",
+          "sha256": "b5a9f8284c685c638796a322ea868843da5e2094c664436e44061e6bcea367ea"
         }
       ]
     },

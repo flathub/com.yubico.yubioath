@@ -213,8 +213,7 @@
       "name": "poetry-core",
       "buildsystem": "simple",
       "build-commands": [
-        "pip3 install --prefix /app --no-deps .",
-        "pip3 wheel ."
+        "pip3 install --prefix /app --no-deps ."
       ],
       "sources": [
         {

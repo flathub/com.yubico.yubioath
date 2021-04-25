@@ -213,7 +213,7 @@
       "name": "yubikey-manager",
       "buildsystem": "simple",
       "build-commands": [
-        "pip3 install --prefix /app --no-deps ."
+        "pip3 install --prefix /app --no-deps --no-build-isolation ."
       ],
       "sources": [
         {

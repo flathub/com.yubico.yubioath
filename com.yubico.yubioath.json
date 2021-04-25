@@ -23,6 +23,7 @@
     "--require-version=1.3.2"
   ],
   "modules": [
+    "shared-modules/libusb/libusb.json",
     {
       "name": "pcsc-lite",
       "config-opts": [

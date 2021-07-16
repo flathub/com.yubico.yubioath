@@ -218,8 +218,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/Yubico/yubikey-manager/releases/download/4.0.2/yubikey-manager-4.0.2.tar.gz",
-          "sha256": "998f804a66695feeb3a48ba200320850243aa605d6d4edcb30bea4cc349aea21"
+          "url": "https://github.com/Yubico/yubikey-manager/releases/download/4.0.5/yubikey-manager-4.0.5.tar.gz",
+          "sha256": "20117dbdcbe5bed6c9a172dae8452c44689c283ad1a8434e28f4e05de153f288"
         }
       ]
     },

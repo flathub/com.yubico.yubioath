@@ -42,8 +42,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/LudovicRousseau/PCSC/archive/refs/tags/1.9.1.tar.gz",
-          "sha256": "1eaad042a8a8f9d398bf3fc27a35e516e4f0b90437a0e11a46d280ddd9c5848d"
+          "url": "https://github.com/LudovicRousseau/PCSC/archive/refs/tags/1.9.3.tar.gz",
+          "sha256": "7b7544a2080d53362b2da32800cf3b0ad5d17544af11e339edee4e775b818974"
         }
       ]
     },
@@ -88,8 +88,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/LudovicRousseau/pyscard/archive/refs/tags/2.0.0.tar.gz",
-          "sha256": "314d44a46d14c25c532c4679c116991ae720d62bce3739e82a9b2a34acd86b18"
+          "url": "https://github.com/LudovicRousseau/pyscard/archive/refs/tags/2.0.1.tar.gz",
+          "sha256": "709ccd1a368169a5815c8935d4ca29466dc3216cd83bfb9046f8c909c1e09c66"
         },
         {
           "type": "patch",
@@ -218,8 +218,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/Yubico/yubikey-manager/releases/download/4.0.5/yubikey-manager-4.0.5.tar.gz",
-          "sha256": "20117dbdcbe5bed6c9a172dae8452c44689c283ad1a8434e28f4e05de153f288"
+          "url": "https://github.com/Yubico/yubikey-manager/releases/download/4.0.7/yubikey-manager-4.0.7.tar.gz",
+          "sha256": "9972db8a1c7c13eb1a618015a8ad8011c03a045a08fee248e5de4f120f55fc4f"
         }
       ]
     },

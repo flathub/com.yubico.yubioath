@@ -5,8 +5,6 @@ diff -ur yubioath-desktop.old/yubioath-desktop.pro yubioath-desktop/yubioath-des
  SOURCES += main.cpp systemtray.cpp
  HEADERS += screenshot.h systemtray.h
  
-+target.path = $$PREFIX/bin
-+
  # This is the internal verson number, Windows requires 4 digits.
  win32|win64 {
      VERSION = 4.3.6.0

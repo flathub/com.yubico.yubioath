@@ -42,8 +42,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/LudovicRousseau/PCSC/archive/refs/tags/1.9.3.tar.gz",
-          "sha256": "7b7544a2080d53362b2da32800cf3b0ad5d17544af11e339edee4e775b818974"
+          "url": "https://github.com/LudovicRousseau/PCSC/archive/refs/tags/1.9.4.tar.gz",
+          "sha256": "3ee0dfd1f98739a68b1152c33926acce52f408872f4a488f850608b784079ead"
         }
       ]
     },
@@ -234,8 +234,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://developers.yubico.com/yubioath-desktop/Releases/yubioath-desktop-5.0.5.tar.gz",
-          "sha256": "0fd4a6d53b078803749b4dbf1e6f53217cfb80cc312b640c80a0c49b6037ba17"
+          "url": "https://github.com/Yubico/yubioath-desktop/archive/refs/tags/yubioath-desktop-5.1.0.tar.gz",
+          "sha256": "ffe5dfd3fffbaf4e43aa366c1863e7f720df2bcbe437d5baddc34f7837dfa78e"
         },
         {
           "type": "patch",

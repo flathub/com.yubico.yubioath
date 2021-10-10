@@ -20,7 +20,8 @@
     "--talk-name=org.kde.StatusNotifierWatcher",
     "--talk-name=org.a11y.Bus",
     "--device=all",
-    "--require-version=1.3.2"
+    "--require-version=1.3.2",
+    "--env=YKMAN_XDG_EXPERIMENTAL=1"
   ],
   "modules": [
     "shared-modules/libusb/libusb.json",

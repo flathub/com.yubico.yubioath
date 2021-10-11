@@ -1,16 +1,21 @@
-diff -ur yubioath-desktop.old/yubioath-desktop.pro yubioath-desktop/yubioath-desktop.pro
---- yubioath-desktop.old/yubioath-desktop.pro	2019-05-29 08:42:23.000000000 +0200
-+++ yubioath-desktop/yubioath-desktop.pro	2019-08-19 10:49:40.725980595 +0200
-@@ -4,6 +4,8 @@
- SOURCES += main.cpp systemtray.cpp
- HEADERS += screenshot.h systemtray.h
- 
-+target.path = $$PREFIX/bin
-+
- # This is the internal verson number, Windows requires 4 digits.
- win32|win64 {
-     VERSION = 4.3.6.0
-@@ -39,7 +41,7 @@
+diff --git a/deployment.pri b/deployment.pri
+index 57bdd3a..9c5be8f 100644
+--- a/deployment.pri
++++ b/deployment.pri
+@@ -3,7 +3,7 @@ unix:!android {
+         qnx {
+             target.path = /tmp/$${TARGET}/bin
+         } else {
+-            target.path = /usr/bin
++            target.path = /app/bin
+         }
+         export(target.path)
+     }
+diff --git a/yubioath-desktop.pro b/yubioath-desktop.pro
+index 551416a..9a1c271 100644
+--- a/yubioath-desktop.pro
++++ b/yubioath-desktop.pro
+@@ -51,7 +51,7 @@ macx {
      pip.commands = python3 -m venv pymodules && source pymodules/bin/activate && pip3 install -r requirements.txt && deactivate
  }
  !macx {
@@ -19,4 +24,3 @@ diff -ur yubioath-desktop.old/yubioath-desktop.pro yubioath-desktop/yubioath-des
  }
  
  # Default rules for deployment.
-Only in yubioath-desktop: yubioath-desktop.pro.orig

@@ -107,7 +107,7 @@ modules:
   - name: yubioath-desktop
     buildsystem: qmake
     post-install:
-      - install -Dm755 yubioath-desktop /app/bin
+      - mv /app/lib/yubioath-desktop /app/bin/yubioath-desktop
       - install -Dm644 resources/com.yubico.yubioath.desktop /app/share/applications/com.yubico.yubioath.desktop
       - install -Dm644 resources/icons/com.yubico.yubioath.svg /app/share/icons/hicolor/scalable/apps/com.yubico.yubioath.svg
       - install -Dm644 resources/com.yubico.yubioath.appdata.xml /app/share/appdata/com.yubico.yubioath.appdata.xml
@@ -123,7 +123,3 @@ modules:
         path: yubioath-desktop-path.patch
       - type: patch
         path: yubioath-desktop-releases.patch
-      - type: script
-        dest-filename: yubioath-desktop
-        commands:
-          - /app/lib/yubioath-desktop

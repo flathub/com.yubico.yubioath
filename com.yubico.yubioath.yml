@@ -169,3 +169,4 @@ modules:
           - yubioath-desktop-path.patch
           - yubioath-desktop-releases.patch
           - back-port-install-fix.patch
+          - fix-appdata.patch

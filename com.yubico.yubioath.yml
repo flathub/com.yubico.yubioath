@@ -106,6 +106,8 @@ modules:
           name: pyscard
       - type: patch
         path: pyscard-include-path.patch
+  - python3-tomli.json
+  - python3-typing_extensions.json
   - name: python3-setuptools_rust
     buildsystem: simple
     build-commands:
@@ -118,12 +120,6 @@ modules:
         x-checker-data:
           type: pypi
           name: setuptools-rust
-      - type: file
-        url: https://files.pythonhosted.org/packages/be/ba/1f744cdc819428fc6b5084ec34d9b30660f6f9daaf70eead706e3203ec3c/toml-0.10.2.tar.gz
-        sha256: b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f
-        x-checker-data:
-          type: pypi
-          name: toml
   - name: python3-cryptography
     build-options:
       append-path: /usr/lib/sdk/rust-stable/bin
@@ -173,3 +169,4 @@ modules:
           - yubioath-desktop-path.patch
           - yubioath-desktop-releases.patch
           - back-port-install-fix.patch
+          - fix-appdata.patch

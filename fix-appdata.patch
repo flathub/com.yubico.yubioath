@@ -1,0 +1,23 @@
+From 5a8e7518e83b9d819b88e33b665016a7837c1481 Mon Sep 17 00:00:00 2001
+From: Luna <30698906+Lunarequest@users.noreply.github.com>
+Date: Tue, 30 Nov 2021 16:21:41 +0530
+Subject: [PATCH] Update com.yubico.yubioath.appdata.xml
+
+The screenshot at https://raw.githubusercontent.com/Yubico/yubioath-desktop/master/screenshot.png has changed and now causes the appdata file to fail  verification
+---
+ resources/com.yubico.yubioath.appdata.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/resources/com.yubico.yubioath.appdata.xml b/resources/com.yubico.yubioath.appdata.xml
+index 247b96b5..49797e76 100644
+--- a/resources/com.yubico.yubioath.appdata.xml
++++ b/resources/com.yubico.yubioath.appdata.xml
+@@ -30,7 +30,7 @@
+ 
+   <screenshots>
+     ​<screenshot type="default">
+-      <image type="source" width="850" height="393">https://raw.githubusercontent.com/Yubico/yubioath-desktop/master/screenshot.png</image>
++      <image type="source" width="830" height="323">https://raw.githubusercontent.com/Yubico/yubioath-desktop/master/screenshot.png</image>
+       <caption>Different modes and themes</caption>
+     </screenshot>
+   </screenshots>

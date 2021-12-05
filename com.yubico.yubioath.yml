@@ -115,8 +115,8 @@ modules:
         --prefix=${FLATPAK_DEST} "setuptools_rust" --no-build-isolation
     sources:
       - type: file
-        url: https://files.pythonhosted.org/packages/3b/17/39804596680094ddabf2f44814c8919edb14da4f5db7b45e38915133f7fb/setuptools-rust-1.1.1.tar.gz
-        sha256: dc04afb52a70e56f5d6800a7ed9c45ad5937ba95e51a042b9096459edc038ad6
+        url: https://files.pythonhosted.org/packages/67/08/e1aa2c582c62ac76e4d60f8e454bd3bba933781a06a88b4e38797445822a/setuptools-rust-1.1.2.tar.gz
+        sha256: a0adb9b503c0ffc4e8fe80b7c617898cefa78049983aaaea7f747e153a3e65d1
         x-checker-data:
           type: pypi
           name: setuptools-rust

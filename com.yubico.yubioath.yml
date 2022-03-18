@@ -98,8 +98,8 @@ modules:
       - pip3 install --prefix /app --no-deps .
     sources:
       - type: archive
-        url: https://files.pythonhosted.org/packages/57/aa/aa2610e7929fac90509eecac0f3de1049db07a6c889e3a99008e215cb665/pyscard-2.0.2.tar.gz
-        sha256: 05de0579c42b4eb433903aa2fb327d4821ebac262434b6584da18ed72053fd9e
+        url: https://files.pythonhosted.org/packages/10/00/8dcf33f0695ea3b1eac265c95a6d61cae138eb60527d9f58d7dd7b8cc812/pyscard-2.0.3.tar.gz
+        sha256: 13c3e108163fac4f1237804ed20c5b1eb1bd5d5ee3e96adb60bfb6b9122f528d
         x-checker-data:
           type: pypi
           name: pyscard

@@ -37,8 +37,8 @@ modules:
       - /lib/libpcsclite.so
     sources:
       - type: archive
-        url: https://pcsclite.apdu.fr/files/pcsc-lite-1.9.7.tar.bz2
-        sha256: 92c1ef6e94170ac06c9c48319a455ad6de5bcc60d9d055a823b72a2f4ff3e466
+        url: https://pcsclite.apdu.fr/files/pcsc-lite-1.9.8.tar.bz2
+        sha256: 502d80c557ecbee285eb99fe8703eeb667bcfe067577467b50efe3420d1b2289
         x-checker-data:
           type: anitya
           project-id: 2611
@@ -87,8 +87,8 @@ modules:
         --prefix=${FLATPAK_DEST} "semantic-version" --no-build-isolation
     sources:
       - type: file
-        url: https://files.pythonhosted.org/packages/cb/56/4aa487b46d09646eb1863faa7026551d8309ece2281794bf13b20f28ab94/semantic_version-2.9.0.tar.gz
-        sha256: abf54873553e5e07a6fd4d5f653b781f5ae41297a493666b59dcf214006a12b2
+        url: https://files.pythonhosted.org/packages/7d/31/f2289ce78b9b473d582568c234e104d2a342fd658cc288a7553d83bb8595/semantic_version-2.10.0.tar.gz
+        sha256: bdabb6d336998cbb378d4b9db3a4b56a1e3235701dc05ea2690d9a997ed5041c
         x-checker-data:
           type: pypi
           name: semantic_version

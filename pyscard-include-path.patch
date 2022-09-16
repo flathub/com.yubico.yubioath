@@ -1,11 +1,12 @@
 diff -ur pyscard-release-1.9.9.old/setup.py pyscard-release-1.9.9/setup.py
 --- pyscard-release-1.9.9.old/setup.py	2019-08-20 20:34:13.468821467 +0200
 +++ pyscard-release-1.9.9/setup.py	2019-08-20 20:34:27.476686855 +0200
-@@ -67,7 +67,7 @@
- else:
-     platform__cc_defines = [('PCSCLITE', '1')]
-     platform_swig_opts = ['-DPCSCLITE']
--    platform_include_dirs = ['/usr/include/PCSC', '/usr/local/include/PCSC']
-+    platform_include_dirs = ['/app/include/PCSC']
+@@ -70,7 +70,7 @@
+         pkg_config_cflags = subprocess.check_output(['pkg-config', '--cflags', 'libpcsclite'])
+         platform_extra_compile_args += shlex.split(pkg_config_cflags.decode())
+     except:
+-        platform_include_dirs = ['/usr/include/PCSC', '/usr/local/include/PCSC']
++        platform_include_dirs = ['/usr/include/PCSC', '/usr/local/include/PCSC', '/app/include/PCSC']
  
- 
+ VERSION_INFO = (2, 0, 3, 0)
+ VERSION_STR = '%i.%i.%i' % VERSION_INFO[:3]

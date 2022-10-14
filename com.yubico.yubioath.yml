@@ -42,9 +42,6 @@ modules:
           type: anitya
           project-id: 2611
           url-template: https://pcsclite.apdu.fr/files/pcsc-lite-$version.tar.bz2
-      - type: patch
-        paths:
-          - pcsc-lite-1.9.1-maxreaders.patch
 
   - name: yubioath-desktop
     buildsystem: simple

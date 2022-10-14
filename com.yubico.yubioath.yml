@@ -1,10 +1,8 @@
 app-id: com.yubico.yubioath
-runtime: org.kde.Platform
-sdk: org.kde.Sdk
-sdk-extensions:
-  - org.freedesktop.Sdk.Extension.rust-stable
-runtime-version: 5.15-21.08
-command: yubioath-desktop
+runtime: org.freedesktop.Platform
+sdk: org.freedesktop.Sdk
+runtime-version: "22.08"
+command: authenticator
 cleanup:
   - /bin/pcsc-spy
   - /include
@@ -24,6 +22,7 @@ finish-args:
   - --persist=.ykman
 modules:
   - shared-modules/libusb/libusb.json
+  
   - name: pcsc-lite
     config-opts:
       - --disable-libudev
@@ -43,127 +42,23 @@ modules:
           type: anitya
           project-id: 2611
           url-template: https://pcsclite.apdu.fr/files/pcsc-lite-$version.tar.bz2
-  - name: pyotherside
-    buildsystem: qmake
-    sources:
-      - type: git
-        url: https://github.com/thp/pyotherside.git
-        tag: 1.6.0
-        commit: 63eb5290d5994dc31471dd68e43805f78099c7c6
-        x-checker-data:
-          type: git
-          tag-pattern: ([\d+]\.[\d+]\.[\d+])
-      - type: patch
-        path: pyotherside-install-path.patch
-  - name: swig
-    config-opts:
-      - --without-alllang
-      - --with-python3
-    cleanup:
-      - '*'
-    sources:
-      - type: archive
-        url: http://download.sourceforge.net/swig/swig-4.0.2.tar.gz
-        sha256: d53be9730d8d58a16bf0cbd1f8ac0c0c3e1090573168bfa151b01eb47fa906fc
-        x-checker-data:
-          type: anitya
-          project-id: 4919
-          url-template: http://download.sourceforge.net/swig/swig-$version.tar.gz
-  - name: poetry-core
-    buildsystem: simple
-    build-commands:
-      - pip3 install --prefix /app --no-deps .
-    sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/27/ba/611a561ef300abdae81a576445334fb7a41e62c295b050338a4f54fa76d4/poetry-core-1.2.0.tar.gz
-        sha256: ceccec95487e46c63a41761fbac5211b809bca22658e25a049f4c7da96269f71
-        x-checker-data:
-          type: pypi
-          name: poetry-core
-  - name: semantic-version
-    buildsystem: simple
-    build-commands:
-      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
-        --prefix=${FLATPAK_DEST} "semantic-version" --no-build-isolation
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/7d/31/f2289ce78b9b473d582568c234e104d2a342fd658cc288a7553d83bb8595/semantic_version-2.10.0.tar.gz
-        sha256: bdabb6d336998cbb378d4b9db3a4b56a1e3235701dc05ea2690d9a997ed5041c
-        x-checker-data:
-          type: pypi
-          name: semantic_version
-  - name: pyscard
-    buildsystem: simple
-    build-commands:
-      - pip3 install --prefix /app --no-deps .
-    sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/10/00/8dcf33f0695ea3b1eac265c95a6d61cae138eb60527d9f58d7dd7b8cc812/pyscard-2.0.3.tar.gz
-        sha256: 13c3e108163fac4f1237804ed20c5b1eb1bd5d5ee3e96adb60bfb6b9122f528d
-        x-checker-data:
-          type: pypi
-          name: pyscard
-      - type: patch
-        path: pyscard-include-path.patch
-  - python3-tomli.json
-  - python3-typing_extensions.json
-  # setuptools-rust>1.3 needs setuptools>=62.4
-  - name: python3-setuptools_rust
-    buildsystem: simple
-    build-commands:
-      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
-        --prefix=${FLATPAK_DEST} "setuptools_rust" --no-build-isolation
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/a9/55/5db4a5b137af2afdc23a6e251d5ebb3b4e04c8deb68fbb5ffdacbd134c0c/setuptools-rust-1.3.0.tar.gz
-        sha256: 958c5bf4ab6483d59dab888538121871cc5006354a42fb0fbd50acf03caad1de
-  - name: python3-cryptography
-    build-options:
-      append-path: /usr/lib/sdk/rust-stable/bin
-      env:
-        CARGO_HOME: /run/build/python3-cryptography/cargo
-        CARGO_NET_OFFLINE: 'true'
-        RUST_BACKTRACE: '1'
-    buildsystem: simple
-    build-commands:
-      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
-        --prefix=${FLATPAK_DEST} "cryptography" --no-build-isolation --no-binary cryptography
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/5e/0b/95d387f5f4433cb0f53ff7ad859bd2c6051051cebbb564f139a999ab46de/pycparser-2.21.tar.gz
-        sha256: e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206
-        x-checker-data:
-          type: pypi
-          name: pycparser
-      - type: file
-        url: https://files.pythonhosted.org/packages/2b/a8/050ab4f0c3d4c1b8aaa805f70e26e84d0e27004907c5b8ecc1d31815f92a/cffi-1.15.1.tar.gz
-        sha256: d400bfb9a37b1351253cb402671cea7e89bdecc294e8016a707f6d1d8ac934f9
-        x-checker-data:
-          type: pypi
-          name: cffi
-      # cyrptography 35 is too new
-      - type: file
-        url: https://files.pythonhosted.org/packages/cc/98/8a258ab4787e6f835d350639792527d2eb7946ff9fc0caca9c3f4cf5dcfe/cryptography-3.4.8.tar.gz
-        sha256: 94cc5ed4ceaefcbe5bf38c8fba6a21fc1d365bb8fb826ea1688e3370b2e24a1c
-      - pycrypto.json # regenrate on update
-  - python3-yubikey-manager.json
+
   - name: yubioath-desktop
-    buildsystem: qmake
-    post-install:
-      - install -Dm644 resources/com.yubico.yubioath.desktop /app/share/applications/com.yubico.yubioath.desktop
-      - install -Dm644 resources/icons/com.yubico.yubioath.svg /app/share/icons/hicolor/scalable/apps/com.yubico.yubioath.svg
-      - install -Dm644 resources/com.yubico.yubioath.appdata.xml /app/share/appdata/com.yubico.yubioath.appdata.xml
+    buildsystem: simple
+    build-commands:
+      - mkdir /app/yubioath-desktop
+      - cp -r * /app/yubioath-desktop
+      - mkdir -p /app/bin
+      - ln -s /app/yubioath-desktop/authenticator /app/bin/authenticator
+      - mkdir -p /app/share/applications
+      - cp /app/yubioath-desktop/com.yubico.authenticator.desktop /app/share/applications/com.yubico.yubioath.desktop
+      - mkdir -p /app/share/icons/hicolor/128x128/apps
+      - cp /app/yubioath-desktop/com.yubico.yubioath.png /app/share/icons/hicolor/128x128/apps/com.yubico.yubioath.png
+      - mkdir -p /app/share/appdata
+      - cp com.yubico.yubioath.appdata.xml /app/share/appdata/com.yubico.yubioath.appdata.xml
     sources:
       - type: archive
-        url: https://developers.yubico.com/yubioath-desktop/Releases/yubioath-desktop-5.1.0.tar.gz
-        sha256: 2e6f45e1e686f53e5bac057b5c3024a23d160a5997118221b94ce1dab934a1cd
-        x-checker-data:
-          type: rotating-url
-          url: https://developers.yubico.com/yubioath-desktop/Releases/yubioath-desktop-latest.tar.gz
-          pattern: https://developers.yubico.com/yubioath-desktop/Releases/yubioath-desktop-([0-9.]+).tar.gz
-      - type: patch
-        paths:
-          - yubioath-desktop-path.patch
-          - yubioath-desktop-releases.patch
-          - back-port-install-fix.patch
-          - fix-appdata.patch
+        url: https://developers.yubico.com/yubioath-desktop/Beta/yubioath-desktop-6.0.0-beta.1-linux.tar.gz
+        sha256: 23b3d927f9163496661a3e83b2cf29fb4991d14cb7a5ab3bf6126710630104b4
+      - type: file
+        path: com.yubico.yubioath.appdata.xml

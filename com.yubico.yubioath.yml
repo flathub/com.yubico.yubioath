@@ -1,7 +1,7 @@
 app-id: com.yubico.yubioath
 runtime: org.freedesktop.Platform
 sdk: org.freedesktop.Sdk
-runtime-version: '23.08'
+runtime-version: "23.08"
 command: authenticator
 cleanup:
   - /bin/pcsc-spy
@@ -9,8 +9,8 @@ cleanup:
   - /lib/pkgconfig
   - /share/doc
   - /share/man
-  - '*.la'
-  - '*.a'
+  - "*.la"
+  - "*.a"
 finish-args:
   - --socket=fallback-x11
   - --socket=wayland
@@ -61,6 +61,9 @@ modules:
           type: anitya
           project-id: 2611
           url-template: https://pcsclite.apdu.fr/files/pcsc-lite-$version.tar.bz2
+      - type: patch
+        paths:
+          - pcsc-lite-1.9.1-maxreaders.patch
 
   - name: yubioath-desktop
     buildsystem: simple
@@ -84,7 +87,8 @@ modules:
           type: json
           url: https://api.github.com/repos/Yubico/yubioath-flutter/releases/latest
           version-query: .tag_name
-          url-query: .assets[] | select(.name=="yubico-authenticator-" + $version
+          url-query:
+            .assets[] | select(.name=="yubico-authenticator-" + $version
             + "-linux.tar.gz") | .browser_download_url
       - type: file
         path: com.yubico.yubioath.appdata.xml

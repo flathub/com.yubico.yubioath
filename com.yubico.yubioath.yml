@@ -73,10 +73,12 @@ modules:
       - mkdir -p /app/share/applications
       - mv com.yubico.yubioath.desktop /app/share/applications/com.yubico.yubioath.desktop
       - mkdir -p /app/share/icons/hicolor/128x128/apps
-      - mv linux_support/com.yubico.yubioath.png /app/share/icons/hicolor/128x128/apps/com.yubico.yubioath.png
+      - cp /app/yubioath-desktop/com.yubico.yubioath.png /app/share/icons/hicolor/128x128/apps/com.yubico.yubioath.png
       - mkdir -p /app/share/appdata
-      - mv com.yubico.yubioath.appdata.xml /app/share/appdata/com.yubico.yubioath.appdata.xml
+      - cp com.yubico.yubioath.appdata.xml /app/share/appdata/com.yubico.yubioath.appdata.xml
     sources:
       - type: archive
         url: https://developers.yubico.com/yubioath-desktop/Beta/yubioath-desktop-6.0.0-beta.1-linux.tar.gz
         sha256: 23b3d927f9163496661a3e83b2cf29fb4991d14cb7a5ab3bf6126710630104b4
+      - type: file
+        path: com.yubico.yubioath.appdata.xml

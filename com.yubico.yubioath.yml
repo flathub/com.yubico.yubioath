@@ -78,6 +78,7 @@ modules:
       - mv com.yubico.yubioath.appdata.xml /app/share/appdata/com.yubico.yubioath.appdata.xml
     sources:
       - type: archive
+<<<<<<< HEAD
         url: https://github.com/Yubico/yubioath-flutter/releases/download/7.0.0/yubico-authenticator-7.0.0-linux.tar.gz
         sha256: ec6bdca21ffabb0565d0d63f3e5525953dbb98b7ac2263bacea3770a18555ee5
         x-checker-data:
@@ -90,3 +91,7 @@ modules:
         path: com.yubico.yubioath.appdata.xml
       - type: file
         path: com.yubico.yubioath.desktop
+=======
+        url: https://developers.yubico.com/yubioath-desktop/Beta/yubioath-desktop-6.0.0-beta.1-linux.tar.gz
+        sha256: 23b3d927f9163496661a3e83b2cf29fb4991d14cb7a5ab3bf6126710630104b4
+>>>>>>> 0f9dc74 (remove not working url checker)

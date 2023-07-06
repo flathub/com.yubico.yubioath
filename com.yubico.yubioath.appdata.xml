@@ -16,7 +16,7 @@
   <developer_name>Yubico</developer_name>
 
   <description>
-    <p>NOTE: This (community) flatpak currently has issues with distros that use a patched version of pcsc-lite, like Fedora. DON'T report this to Yubico.</p>
+    <p>NOTE: This (community) flatpak currently has issues with distros that use a patched version of pcsc-lite, like Fedora 37 (or older). DON'T report this to Yubico.</p>
     <p>Generating Open Authentication (OATH) time-based TOTP and event-based HOTP one-time password codes, with the help of a YubiKey that protects the shared secrets.</p>
     <p>Features:</p>
     <ul>

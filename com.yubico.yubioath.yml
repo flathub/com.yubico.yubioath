@@ -1,7 +1,7 @@
 app-id: com.yubico.yubioath
 runtime: org.freedesktop.Platform
 sdk: org.freedesktop.Sdk
-runtime-version: '22.08'
+runtime-version: '23.08'
 command: authenticator
 cleanup:
   - /bin/pcsc-spy

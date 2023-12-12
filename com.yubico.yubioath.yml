@@ -45,6 +45,7 @@ modules:
     config-opts:
       - --disable-libudev
       - --disable-libsystemd
+      - --disable-polkit
       - --without-systemdsystemunitdir
     post-install:
       - rm /app/sbin/pcscd

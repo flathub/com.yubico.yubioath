@@ -24,23 +24,6 @@ finish-args:
 modules:
   - shared-modules/libusb/libusb.json
 
-  - name: libnotify
-    buildsystem: meson
-    config-opts:
-      - -Dtests=false
-      - -Dintrospection=disabled
-      - -Dman=false
-      - -Dgtk_doc=false
-      - -Ddocbook_docs=disabled
-    sources:
-      - type: archive
-        url: https://download.gnome.org/sources/libnotify/0.8/libnotify-0.8.3.tar.xz
-        sha256: ee8f3ef946156ad3406fdf45feedbdcd932dbd211ab4f16f75eba4f36fb2f6c0
-        x-checker-data:
-          type: gnome
-          name: libnotify
-          stable-only: true
-
   - name: pcsc-lite
     config-opts:
       - --disable-libudev
@@ -65,17 +48,17 @@ modules:
   - name: yubioath-desktop
     buildsystem: simple
     build-commands:
-      - rm -r desktop_integration.sh README.adoc linux_support/com.yubico.authenticator.desktop
+      - rm -r desktop_integration.sh README.adoc
       - mv authenticator /app/bin/authenticator
       - mv data/ /app/bin/data
       - mv helper/ /app/bin/helper
       - mv lib/ /app/bin/lib
-      - mkdir -p /app/share/applications
-      - mv com.yubico.yubioath.desktop /app/share/applications/com.yubico.yubioath.desktop
-      - mkdir -p /app/share/icons/hicolor/128x128/apps
-      - cp /app/yubioath-desktop/com.yubico.yubioath.png /app/share/icons/hicolor/128x128/apps/com.yubico.yubioath.png
-      - mkdir -p /app/share/appdata
-      - cp com.yubico.yubioath.appdata.xml /app/share/appdata/com.yubico.yubioath.appdata.xml
+    post-install:
+      - mv linux_support/com.yubico.authenticator.desktop $FLATPAK_ID.desktop
+      - install -D $FLATPAK_ID.desktop -t /app/share/applications/
+      - desktop-file-edit --set-icon=$FLATPAK_ID --set-key=Exec --set-value=authenticator /app/share/applications/$FLATPAK_ID.desktop
+      - install -D com.yubico.yubioath.appdata.xml -t /app/share/appdata/
+      - install -Dm644 linux_support/com.yubico.yubioath.png /app/share/icons/hicolor/128x128/apps/$FLATPAK_ID.png
     sources:
       - type: archive
         url: https://github.com/Yubico/yubioath-flutter/releases/download/7.0.0/yubico-authenticator-7.0.0-linux.tar.gz

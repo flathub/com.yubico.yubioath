@@ -17,10 +17,10 @@
   <developer_name>Yubico</developer_name>
 
   <description>
+    <p>NOTE: This (community) flatpak currently has issues with distros that use a patched version
+      of pcsc-lite, like Fedora 37 (or older). DON'T report this to Yubico.</p>
     <p>Generating Open Authentication (OATH) time-based TOTP and event-based HOTP one-time password
       codes, with the help of a YubiKey that protects the shared secrets.</p>
-    <p>NOTE: This (community) flatpak currently has issues with distros that use a patched version
-      of pcsc-lite, like Fedora. DON'T report this to Yubico.</p>
     <p>Features:</p>
     <ul>
       <li>Add a credential by scanning a QR code on the screen</li>
@@ -32,10 +32,14 @@
     </ul>
   </description>
 
-  <screenshots> ​<screenshot type="default">
+  <screenshots>
+    <screenshot type="default">
       <image type="source" width="830" height="323">
-    https://raw.githubusercontent.com/Yubico/yubioath-desktop/master/screenshot.png</image>
-      <caption>Different modes and themes</caption>
+    https://raw.githubusercontent.com/Yubico/yubioath-flutter/main/splash.png</image>
+      <caption>Official splash image</caption>
+    </screenshot> ​<screenshot>
+      <image type="source" width="400" height="724">https://i.imgur.com/CMk0Oyc.png</image>
+      <caption>Main window (with e-mail addresses censored)</caption>
     </screenshot>
   </screenshots>
 

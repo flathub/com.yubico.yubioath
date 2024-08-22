@@ -8,16 +8,19 @@
 
   <name>Yubico Authenticator</name>
   <summary>Graphical interface for displaying OATH codes with a YubiKey</summary>
-  <url type="homepage">https://www.yubico.com/products/yubico-authenticator/yubico-authenticator-desktop-beta/</url>
+  <url type="homepage">
+    https://www.yubico.com/products/yubico-authenticator/yubico-authenticator-desktop-beta/</url>
   <url type="contact">https://support.yubico.com/support/tickets/new</url>
   <url type="bugtracker">https://github.com/flathub/com.yubico.yubioath/issues</url>
-  <content_rating type="oars-1.1"/>
+  <content_rating type="oars-1.1" />
 
   <developer_name>Yubico</developer_name>
 
   <description>
-    <p>Generating Open Authentication (OATH) time-based TOTP and event-based HOTP one-time password codes, with the help of a YubiKey that protects the shared secrets.</p>
-    <p>NOTE: This (community) flatpak currently has issues with distros that use a patched version of pcsc-lite, like Fedora. DON'T report this to Yubico.</p>
+    <p>NOTE: This (community) flatpak currently has issues with distros that use a patched version
+      of pcsc-lite, like Fedora 37 (or older). DON'T report this to Yubico.</p>
+    <p>Generating Open Authentication (OATH) time-based TOTP and event-based HOTP one-time password
+      codes, with the help of a YubiKey that protects the shared secrets.</p>
     <p>Features:</p>
     <ul>
       <li>Add a credential by scanning a QR code on the screen</li>
@@ -30,31 +33,48 @@
   </description>
 
   <screenshots>
-    ​<screenshot type="default">
-      <image type="source" width="830" height="323">https://raw.githubusercontent.com/Yubico/yubioath-desktop/master/screenshot.png</image>
-      <caption>Different modes and themes</caption>
+    <screenshot type="default">
+      <image type="source" width="830" height="323">
+    https://raw.githubusercontent.com/Yubico/yubioath-flutter/main/splash.png</image>
+      <caption>Official splash image</caption>
+    </screenshot> ​<screenshot>
+      <image type="source" width="400" height="724">https://i.imgur.com/CMk0Oyc.png</image>
+      <caption>Main window (with e-mail addresses censored)</caption>
     </screenshot>
   </screenshots>
 
   <releases>
-      <release version="6.0.0-beta.1" type="development" date="2022-06-16">
-      </release>
-      <release version="5.1.0" date="2021-10-05">
-      </release>
-      <release version="5.0.5" date="2021-04-14">
-      </release>
-      <release version="5.0.4" date="2020-05-14">
-      </release>
-      <release version="5.0.3" date="2020-04-14">
-      </release>
-      <release version="5.0.2" date="2020-01-29">
+    <release version="7.0.0" date="2024-05-06" />
+    <release version="6.3.1" date="2023-12-12" />
+    <release version="6.3.0" date="2023-09-04" />
+    <release version="6.2.0" date="2023-04-19" />
+    <release version="6.1.0" date="2023-01-25" />
+    <release version="6.0.2" date="2022-11-28" />
+    <release version="6.0.0" date="2022-11-15">
+      <description>
+        <ul>
+          <li>Complete redesign of the UI using Flutter.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="5.1.0" date="2021-10-05">
+    </release>
+    <release version="5.0.5" date="2021-04-14">
+    </release>
+    <release version="5.0.4" date="2020-05-14">
+    </release>
+    <release version="5.0.3" date="2020-04-14">
+    </release>
+    <release version="5.0.2" date="2020-01-29">
       <description>
         <ul>
           <li>Allow spaces in secret key when adding accounts</li>
           <li>UI: Move favorite button to the credential card</li>
           <li>UI: Improved scrolling behaviour</li>
-          <li>Windows: Improve how .dll files are loaded, thanks to Marius Gabriel Mihai for reporting this!</li>
-          <li>Windows: Initial support for .msi installers. If upgrading from the .exe installer, make sure to uninstall the older version before using the .msi</li>
+          <li>Windows: Improve how .dll files are loaded, thanks to Marius Gabriel Mihai for
+            reporting this!</li>
+          <li>Windows: Initial support for .msi installers. If upgrading from the .exe installer,
+            make sure to uninstall the older version before using the .msi</li>
         </ul>
       </description>
     </release>
@@ -79,8 +99,10 @@
           <li>Add Dark Mode and Light Mode</li>
           <li>Feature: Allow switching between connected YubiKeys</li>
           <li>Feature: Select favorite credentials, available from the System Tray/Menu Bar</li>
-          <li>Show some information about the connected YubiKey, such as firmware version and serial number</li>
-          <li>Add experimental support for external smart card readers, enabling the use of a YubiKey over NFC</li>
+          <li>Show some information about the connected YubiKey, such as firmware version and serial
+            number</li>
+          <li>Add experimental support for external smart card readers, enabling the use of a
+            YubiKey over NFC</li>
           <li>Add initial accessability support</li>
         </ul>
       </description>

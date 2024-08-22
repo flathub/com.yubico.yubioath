@@ -1,7 +1,7 @@
 app-id: com.yubico.yubioath
 runtime: org.freedesktop.Platform
 sdk: org.freedesktop.Sdk
-runtime-version: "22.08"
+runtime-version: "23.08"
 command: authenticator
 cleanup:
   - /bin/pcsc-spy
@@ -9,24 +9,25 @@ cleanup:
   - /lib/pkgconfig
   - /share/doc
   - /share/man
-  - '*.la'
-  - '*.a'
+  - "*.la"
+  - "*.a"
 finish-args:
   - --socket=fallback-x11
   - --socket=wayland
   - --socket=pcsc
   - --share=ipc
   - --talk-name=org.kde.StatusNotifierWatcher
+  - --talk-name=org.freedesktop.secrets
   - --device=all
   - --require-version=1.3.2
   - --persist=.ykman
 modules:
   - shared-modules/libusb/libusb.json
-  
   - name: pcsc-lite
     config-opts:
       - --disable-libudev
       - --disable-libsystemd
+      - --disable-polkit
       - --without-systemdsystemunitdir
     post-install:
       - rm /app/sbin/pcscd
@@ -36,29 +37,37 @@ modules:
       - /lib/libpcsclite.so
     sources:
       - type: archive
-        url: https://pcsclite.apdu.fr/files/pcsc-lite-1.9.9.tar.bz2
-        sha256: cbcc3b34c61f53291cecc0d831423c94d437b188eb2b97b7febc08de1c914e8a
+        url: https://pcsclite.apdu.fr/files/pcsc-lite-2.3.0.tar.xz
+        sha256: 1acca22d2891d43ffe6d782740d32e78150d4fcc99e8a3cc763abaf546060d3d
         x-checker-data:
           type: anitya
           project-id: 2611
-          url-template: https://pcsclite.apdu.fr/files/pcsc-lite-$version.tar.bz2
+          url-template: https://pcsclite.apdu.fr/files/pcsc-lite-$version.tar.xz
 
   - name: yubioath-desktop
     buildsystem: simple
     build-commands:
-      - mkdir /app/yubioath-desktop
-      - cp -r * /app/yubioath-desktop
-      - mkdir -p /app/bin
-      - ln -s /app/yubioath-desktop/authenticator /app/bin/authenticator
-      - mkdir -p /app/share/applications
-      - cp /app/yubioath-desktop/com.yubico.authenticator.desktop /app/share/applications/com.yubico.yubioath.desktop
-      - mkdir -p /app/share/icons/hicolor/128x128/apps
-      - cp /app/yubioath-desktop/com.yubico.yubioath.png /app/share/icons/hicolor/128x128/apps/com.yubico.yubioath.png
-      - mkdir -p /app/share/appdata
-      - cp com.yubico.yubioath.appdata.xml /app/share/appdata/com.yubico.yubioath.appdata.xml
+      - rm -r desktop_integration.sh README.adoc
+      - mv authenticator /app/bin/authenticator
+      - mv data/ /app/bin/data
+      - mv helper/ /app/bin/helper
+      - mv lib/ /app/bin/lib
+    post-install:
+      - mv linux_support/com.yubico.authenticator.desktop $FLATPAK_ID.desktop
+      - install -D $FLATPAK_ID.desktop -t /app/share/applications/
+      - desktop-file-edit --set-icon=$FLATPAK_ID --set-key=Exec --set-value=authenticator /app/share/applications/$FLATPAK_ID.desktop
+      - install -D com.yubico.yubioath.appdata.xml -t /app/share/appdata/
+      - install -Dm644 linux_support/com.yubico.yubioath.png /app/share/icons/hicolor/128x128/apps/$FLATPAK_ID.png
     sources:
       - type: archive
-        url: https://developers.yubico.com/yubioath-desktop/Beta/yubioath-desktop-6.0.0-beta.1-linux.tar.gz
-        sha256: 23b3d927f9163496661a3e83b2cf29fb4991d14cb7a5ab3bf6126710630104b4
+        url: https://github.com/Yubico/yubioath-flutter/releases/download/7.0.0/yubico-authenticator-7.0.0-linux.tar.gz
+        sha256: ec6bdca21ffabb0565d0d63f3e5525953dbb98b7ac2263bacea3770a18555ee5
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/Yubico/yubioath-flutter/releases/latest
+          version-query: .tag_name
+          url-query:
+            .assets[] | select(.name=="yubico-authenticator-" + $version
+            + "-linux.tar.gz") | .browser_download_url
       - type: file
         path: com.yubico.yubioath.appdata.xml

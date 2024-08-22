@@ -23,7 +23,6 @@ finish-args:
   - --persist=.ykman
 modules:
   - shared-modules/libusb/libusb.json
-
   - name: pcsc-lite
     config-opts:
       - --disable-libudev

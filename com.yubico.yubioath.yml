@@ -60,7 +60,8 @@ modules:
         x-checker-data:
           type: anitya
           project-id: 2611
-          versions: <: 2.3.0
+          versions:
+            <: 2.3.0
           url-template: https://pcsclite.apdu.fr/files/pcsc-lite-$version.tar.xz
 
   - name: yubioath-desktop

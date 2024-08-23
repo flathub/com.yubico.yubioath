@@ -24,7 +24,7 @@ finish-args:
 modules:
   - shared-modules/libusb/libusb.json
 
-    - name: libnotify
+  - name: libnotify
     buildsystem: meson
     config-opts:
       - -Dtests=false

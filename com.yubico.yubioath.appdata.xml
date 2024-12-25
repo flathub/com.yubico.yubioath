@@ -11,12 +11,14 @@
   <url type="homepage">https://www.yubico.com/products/yubico-authenticator/yubico-authenticator-desktop-beta/</url>
   <url type="contact">https://support.yubico.com/support/tickets/new</url>
   <url type="bugtracker">https://github.com/flathub/com.yubico.yubioath/issues</url>
+  <url type="help">https://github.com/flathub/com.yubico.yubioath</url>
   <content_rating type="oars-1.1"/>
 
   <developer_name>Yubico</developer_name>
 
   <description>
-    <p>NOTE: This (community) flatpak currently works only with distros that use version of pcsc-lite below 2.3.0. For distros that use version 2.3.0 and above use beta version of this flatpak. DON'T report this to Yubico.</p>
+    <p>NOTE: This (community) flatpak currently works only with distros that use version of pcsc-lite below 2.3.0. Distros that use pcsc version 2.3.0 and above must install the beta version of this flatpak. DON'T report this to Yubico.</p>
+    <p>See the "Help" link for install instructions: https://github.com/flathub/com.yubico.yubioath</p>
     <p>Generating Open Authentication (OATH) time-based TOTP and event-based HOTP one-time password codes, with the help of a YubiKey that protects the shared secrets.</p>
     <p>Features:</p>
     <ul>

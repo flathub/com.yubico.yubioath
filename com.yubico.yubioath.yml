@@ -61,8 +61,8 @@ modules:
       - install -Dm644 linux_support/com.yubico.yubioath.png /app/share/icons/hicolor/128x128/apps/$FLATPAK_ID.png
     sources:
       - type: archive
-        url: https://github.com/Yubico/yubioath-flutter/releases/download/7.1.0/yubico-authenticator-7.1.0-linux.tar.gz
-        sha256: c06e8dbe854d34370bba85f169d8ae88864c3e046875ff783557fb259d477837
+        url: https://github.com/Yubico/yubioath-flutter/releases/download/7.1.1/yubico-authenticator-7.1.1-linux.tar.gz
+        sha256: f553503a810ded105254d4b537434d4870657c5240bf43c1a47afae798ace3f2
         x-checker-data:
           type: json
           url: https://api.github.com/repos/Yubico/yubioath-flutter/releases/latest

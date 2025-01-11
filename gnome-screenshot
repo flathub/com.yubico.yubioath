@@ -1,0 +1,94 @@
+#!/usr/bin/python3
+#
+# Program to take a screenshot using the xdg-desktop-portal DBus API
+# This mocks just enough of the gnome-screenshot command to be compatible with
+# the way the app is calling the real gnome-screenshot.
+# https://github.com/Yubico/yubioath-flutter/blob/5fd90578535ae9cef006339691e1dc3a5b8b7f65/helper/helper/qr.py#L49
+#
+# Based on this forum post
+# https://discourse.gnome.org/t/take-screenshot-in-gnome-environment-via-its-dbus-api/21144/4
+
+import shutil
+import sys
+from typing import Any
+from collections.abc import Callable
+
+from gi.repository import Gio, GLib
+
+LOOP = GLib.MainLoop()
+
+
+def on_response(output_filename: str) -> Callable[[Any, Any, str, GLib.Variant], None]:
+    def _inner_on_response(
+        _proxy: Any, _sender_name: Any, signal_name: str, result: GLib.Variant
+    ) -> None:
+        if signal_name == "Response":
+            if result[0] == 0:
+                uri = result[1]["uri"]
+
+                # Strip file://
+                if uri.startswith("file://"):
+                    uri = uri[len("file://") :]
+
+                shutil.move(uri, output_filename)
+
+            else:
+                print("Failed")
+        LOOP.quit()
+
+    return _inner_on_response
+
+
+def get_proxy(
+    bus: Gio.DBusConnection, name: str, object_path: str, interface_name: str
+) -> Gio.DBusProxy:
+    return Gio.DBusProxy.new_sync(
+        bus, Gio.DBusProxyFlags.NONE, None, name, object_path, interface_name, None
+    )
+
+
+def main() -> None:
+    bus = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+    unique_name = bus.get_unique_name().replace(":", "").replace(".", "_")
+
+    # Parse arguments
+    if len(sys.argv) == 3 and sys.argv[1] == "-f":
+        output_filename: str = sys.argv[2]
+    else:
+        print("Did not specify filename to save")
+        sys.exit(2)
+
+    proxy: Gio.DBusProxy = get_proxy(
+        bus,
+        "org.freedesktop.portal.Desktop",
+        "/org/freedesktop/portal/desktop",
+        "org.freedesktop.portal.Screenshot",
+    )
+
+    options: dict[str, GLib.Variant] = {
+        "handle_token": GLib.Variant("s", unique_name + "90"),
+        "modal": GLib.Variant("b", False),
+        "interactive": GLib.Variant("b", False),
+    }
+
+    request_handler = proxy.call_sync(
+        "Screenshot",
+        GLib.Variant("(sa{sv})", ("", options)),
+        Gio.DBusCallFlags.NONE,
+        -1,
+        None,
+    )[0]
+
+    handler_proxy: Gio.DBusProxy = get_proxy(
+        bus,
+        "org.freedesktop.portal.Desktop",
+        request_handler,
+        "org.freedesktop.portal.Request",
+    )
+
+    handler_proxy.connect("g_signal", on_response(output_filename))
+    LOOP.run()
+
+
+if __name__ == "__main__":
+    main()

@@ -14,7 +14,7 @@ Unofficial [Flathub package](https://flathub.org/apps/details/com.yubico.yubioat
 
 **For distros that use pcsc version 2.3.0 and above, use the beta version of this flatpak. DON'T report pcsc issues to Yubico.**
 
-## Install for systems with pcsc daemon >= 2.3.0 (Fedora 41)
+## Install for systems with pcsc daemon 2.3.0 and above (Fedora 41)
 Open a terminal and run:
 ```
 flatpak uninstall com.yubico.yubioath
@@ -22,7 +22,7 @@ flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-
 flatpak install flathub-beta com.yubico.yubioath
 ```
 
-## Systems with pcscd version <= 2.0.3
+## Systems with pcscd version 2.2.3 and below
 
 Install from the main Flathub repo, Software center, or run:
 

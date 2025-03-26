@@ -54,7 +54,7 @@ modules:
       - mv helper/ /app/bin/helper
       - mv lib/ /app/bin/lib
     post-install:
-      - mv linux_support/com.yubico.authenticator.desktop $FLATPAK_ID.desktop
+      - mv linux_support/com.yubico.yubioath.desktop $FLATPAK_ID.desktop
       - install -D $FLATPAK_ID.desktop -t /app/share/applications/
       - desktop-file-edit --set-icon=$FLATPAK_ID --set-key=Exec --set-value=authenticator /app/share/applications/$FLATPAK_ID.desktop
       - install -D com.yubico.yubioath.appdata.xml -t /app/share/appdata/

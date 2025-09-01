@@ -2,19 +2,29 @@
 
 Unofficial [Flathub package](https://flathub.org/apps/details/com.yubico.yubioath) of [Yubico Authenticator](https://developers.yubico.com/yubioath-desktop/) to read TOTP codes (6 digits 2FA) from YubiKey.
 
-You need to install **PCSC daemon** to use this app.
+## Install Instructions:
+> [!IMPORTANT]
+   You must install **PCSC daemon** to use this app.
+>
+> Ubuntu: `sudo apt install pcscd`
+> 
+> Fedora: `sudo dnf install pcsc-lite`
+>
+> Then run `pcscd -v` to check which version of pcsc daemon is installed.
 
-**NOTE: This (community) flatpak currently works only with distros that use version of pcsc-lite below 2.3.0. For distros that use version 2.3.0 and above use beta version of this flatpak. DON'T report this to Yubico.**
+**For distros that use pcsc version 2.3.0 and above, use the beta version of this flatpak. DON'T report pcsc issues to Yubico.**
 
-## Install
+## Install for systems with pcsc daemon 2.3.0 and above (Fedora 41)
+Open a terminal and run:
+```
+flatpak uninstall com.yubico.yubioath
+flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+flatpak install flathub-beta com.yubico.yubioath
+```
 
-1. [Add Flathub](https://flatpak.org/setup/) to your system.
-2. Install PCSC daemon.
+## Systems with pcscd version 2.2.3 and below
 
-   ```sh
-   sudo dnf install pcsc-lite
-   ```
-3. Install Yubico Authenticator from Flathub:
+Install from the main Flathub repo, Software center, or run:
 
    ```sh
    flatpak install flathub com.yubico.yubioath

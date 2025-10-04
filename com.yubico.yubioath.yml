@@ -25,11 +25,11 @@ modules:
   - shared-modules/libusb/libusb.json
 
   - name: pcsc-lite
+    buildsystem: meson
     config-opts:
-      - --disable-libudev
-      - --disable-libsystemd
-      - --disable-polkit
-      - --without-systemdsystemunitdir
+      - -Dlibudev=false
+      - -Dlibsystemd=false
+      - -Dpolkit=false
     post-install:
       - rm /app/sbin/pcscd
       - rmdir /app/sbin || true

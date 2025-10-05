@@ -26,17 +26,14 @@ def on_response(output_filename: str) -> Callable[[Any, Any, str, GLib.Variant],
         if signal_name == "Response":
             if result[0] == 0:
                 uri = result[1]["uri"]
+                file_path = Gio.File.new_for_uri(uri).get_path()
 
-                # Strip file://
-                if uri.startswith("file://"):
-                    uri = uri[len("file://") :]
-
-                shutil.copyfile(uri, output_filename)
+                shutil.copyfile(file_path, output_filename)
                 # Try to remove the screenshot as it contains the 2FA secret.
                 # Removing the file may fail on some systems, so ignore any errors.
                 # https://github.com/flathub/com.yubico.yubioath/issues/121
                 try:
-                    os.remove(uri)
+                    os.remove(file_path)
                 except Exception:
                     pass
 

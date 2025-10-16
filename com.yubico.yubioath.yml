@@ -1,7 +1,7 @@
 app-id: com.yubico.yubioath
 runtime: org.freedesktop.Platform
 sdk: org.freedesktop.Sdk
-runtime-version: '24.08'
+runtime-version: '25.08'
 command: authenticator
 cleanup:
   - /bin/pcsc-spy
@@ -22,14 +22,12 @@ finish-args:
   - --require-version=1.3.2
   - --persist=.ykman
 modules:
-  - shared-modules/libusb/libusb.json
-
   - name: pcsc-lite
+    buildsystem: meson
     config-opts:
-      - --disable-libudev
-      - --disable-libsystemd
-      - --disable-polkit
-      - --without-systemdsystemunitdir
+      - -Dlibudev=false
+      - -Dlibsystemd=false
+      - -Dpolkit=false
     post-install:
       - rm /app/sbin/pcscd
       - rmdir /app/sbin || true
@@ -38,19 +36,17 @@ modules:
       - /lib/libpcsclite.so
     sources:
       - type: archive
-        url: https://pcsclite.apdu.fr/files/pcsc-lite-2.2.3.tar.xz
-        sha256: cab1e62755713f62ce1b567954dbb0e9a7e668ffbc3bbad3ce85c53f8f4e00a4
+        url: https://pcsclite.apdu.fr/files/pcsc-lite-2.3.3.tar.xz
+        sha256: cdff7d7153a0b37aa74e26dfec89ec7dc5c5286aa21b91b903e38739d227e8e7
         x-checker-data:
           type: anitya
           project-id: 2611
-          versions:
-            <: 2.3.0
           url-template: https://pcsclite.apdu.fr/files/pcsc-lite-$version.tar.xz
 
   - name: yubioath-desktop
     buildsystem: simple
     build-commands:
-      - rm -r desktop_integration.sh README.adoc linux_support/com.yubico.authenticator.desktop
+      - rm -r desktop_integration.sh README.adoc linux_support/com.yubico.yubioath.desktop
       - mv authenticator /app/bin/authenticator
       - mv data/ /app/bin/data
       - mv helper/ /app/bin/helper
@@ -63,8 +59,8 @@ modules:
       - mv com.yubico.yubioath.appdata.xml /app/share/appdata/com.yubico.yubioath.appdata.xml
     sources:
       - type: archive
-        url: https://github.com/Yubico/yubioath-flutter/releases/download/7.1.1/yubico-authenticator-7.1.1-linux.tar.gz
-        sha256: f553503a810ded105254d4b537434d4870657c5240bf43c1a47afae798ace3f2
+        url: https://github.com/Yubico/yubioath-flutter/releases/download/7.3.0/yubico-authenticator-7.3.0-linux.tar.gz
+        sha256: a82aa86a60f16d2d6bb07789f33d3256e12b7d2f231a0d6625dea1706c4069e1
         x-checker-data:
           type: json
           url: https://api.github.com/repos/Yubico/yubioath-flutter/releases/latest

@@ -16,7 +16,6 @@
   <developer_name>Yubico</developer_name>
 
   <description>
-    <p>NOTE: This (community) flatpak currently works only with distros that use version of pcsc-lite below 2.3.0. For distros that use version 2.3.0 and above use beta version of this flatpak. DON'T report this to Yubico.</p>
     <p>Generating Open Authentication (OATH) time-based TOTP and event-based HOTP one-time password codes, with the help of a YubiKey that protects the shared secrets.</p>
     <p>Features:</p>
     <ul>
@@ -41,8 +40,11 @@
   </screenshots>
 
   <releases>
-      <release version="7.1.1" date="2024-10-30">
+      <release version="7.3.0" date="2025-09-30">
          <description></description>
+      </release>
+      <release version="7.1.1" date="2024-10-30">
+         <description/>
       </release>
       <release version="7.1.0" date="2024-09-25">
          <description/>

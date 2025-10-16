@@ -4,8 +4,6 @@ Unofficial [Flathub package](https://flathub.org/apps/details/com.yubico.yubioat
 
 You need to install **PCSC daemon** to use this app.
 
-**NOTE: This (community) flatpak currently works only with distros that use version of pcsc-lite below 2.3.0. For distros that use version 2.3.0 and above use beta version of this flatpak. DON'T report this to Yubico.**
-
 ## Install
 
 1. [Add Flathub](https://flatpak.org/setup/) to your system.

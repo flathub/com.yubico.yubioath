@@ -42,6 +42,8 @@ modules:
           type: anitya
           project-id: 2611
           url-template: https://pcsclite.apdu.fr/files/pcsc-lite-$version.tar.xz
+      - type: patch
+        path: pcsc-lite/negotiate_protocol.diff
 
   - name: yubioath-desktop
     buildsystem: simple

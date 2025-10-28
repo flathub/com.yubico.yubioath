@@ -1,4 +1,5 @@
 {
     "only-arches": ["x86_64"],
+    "end-of-life": "Beta branch is no longer supported. Please install the app from stable branch",
     "disable-external-data-checker": false
 }

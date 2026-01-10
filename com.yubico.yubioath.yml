@@ -36,14 +36,12 @@ modules:
       - /lib/libpcsclite.so
     sources:
       - type: archive
-        url: https://pcsclite.apdu.fr/files/pcsc-lite-2.3.3.tar.xz
-        sha256: cdff7d7153a0b37aa74e26dfec89ec7dc5c5286aa21b91b903e38739d227e8e7
+        url: https://pcsclite.apdu.fr/files/pcsc-lite-2.4.1.tar.xz
+        sha256: afd3ba68c8000d2be048dc292df99a9812df9ad2efaf0a366eea22ac1faa19a7
         x-checker-data:
           type: anitya
           project-id: 2611
           url-template: https://pcsclite.apdu.fr/files/pcsc-lite-$version.tar.xz
-      - type: patch
-        path: pcsc-lite/negotiate_protocol.diff
 
   - name: yubioath-desktop
     buildsystem: simple

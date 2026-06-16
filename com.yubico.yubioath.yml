@@ -59,8 +59,8 @@ modules:
       - mv com.yubico.yubioath.appdata.xml /app/share/appdata/com.yubico.yubioath.appdata.xml
     sources:
       - type: archive
-        url: https://github.com/Yubico/yubioath-flutter/releases/download/7.3.3/yubico-authenticator-7.3.3-linux.tar.gz
-        sha256: 35c8c5b126014e260e1cf7c02d5bb935bc7ed8173c6f2a4f52626ae49096c8f9
+        url: https://github.com/Yubico/yubioath-flutter/releases/download/7.4.0/yubico-authenticator-7.4.0-linux.tar.gz
+        sha256: 842ea3255d1c879631ad5475aaf96963d2209f57a21f18ff299ac72a07354139
         x-checker-data:
           type: json
           url: https://api.github.com/repos/Yubico/yubioath-flutter/releases/latest

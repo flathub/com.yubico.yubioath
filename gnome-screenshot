@@ -1,0 +1,447 @@
+#!/usr/bin/env python3
+
+import argparse
+import os
+import secrets
+import socket
+import struct
+import sys
+from typing import Any
+from urllib.parse import unquote
+from urllib.request import urlopen
+
+PORTAL_PATH = "/org/freedesktop/portal/desktop"
+PORTAL_NAME = "org.freedesktop.portal.Desktop"
+REQUEST_INTERFACE = "org.freedesktop.portal.Request"
+ALIGNMENT: dict[str, int] = {
+    "y": 1,
+    "g": 1,
+    "v": 1,
+    "n": 2,
+    "q": 2,
+    "b": 4,
+    "i": 4,
+    "u": 4,
+    "h": 4,
+    "s": 4,
+    "o": 4,
+    "a": 4,
+    "x": 8,
+    "t": 8,
+    "d": 8,
+    "(": 8,
+    "{": 8,
+}
+
+
+def align(data: bytearray, boundary: int) -> None:
+    data.extend(b"\0" * (-len(data) % boundary))
+
+
+def append_string(data: bytearray, value: str) -> None:
+    encoded: bytes = value.encode("utf-8")
+    align(data, 4)
+    data.extend(struct.pack("<I", len(encoded)))
+    data.extend(encoded + b"\0")
+
+
+def append_signature(data: bytearray, value: str) -> None:
+    encoded: bytes = value.encode("ascii")
+    data.append(len(encoded))
+    data.extend(encoded + b"\0")
+
+
+def append_header_field(
+    fields: bytearray, code: int, signature: str, value: str
+) -> None:
+    align(fields, 8)
+    fields.append(code)
+    append_signature(fields, signature)
+    if signature in ("s", "o"):
+        append_string(fields, value)
+    elif signature == "g":
+        append_signature(fields, value)
+    else:
+        raise ValueError("Unsupported D-Bus header field")
+
+
+def append_variant(data: bytearray, signature: str, value: str | bool) -> None:
+    append_signature(data, signature)
+    append_basic(data, signature, value)
+
+
+def append_basic(data: bytearray, signature: str, value: str | bool) -> None:
+    align(data, ALIGNMENT[signature])
+    if signature in ("s", "o") and isinstance(value, str):
+        append_string(data, value)
+    elif signature == "b":
+        data.extend(struct.pack("<I", int(bool(value))))
+    else:
+        raise ValueError("Unsupported D-Bus value type: " + signature)
+
+
+def make_message(
+    message_type: int,
+    serial: int,
+    path: str,
+    interface: str,
+    member: str,
+    destination: str,
+    signature: str,
+    body: bytearray,
+) -> bytearray:
+    fields = bytearray()
+    append_header_field(fields, 1, "o", path)
+    if interface:
+        append_header_field(fields, 2, "s", interface)
+    append_header_field(fields, 3, "s", member)
+    if destination:
+        append_header_field(fields, 6, "s", destination)
+    if signature:
+        append_header_field(fields, 8, "g", signature)
+    header = struct.pack(
+        "<BBBBIII", ord("l"), message_type, 0, 1, len(body), serial, len(fields)
+    )
+    message = bytearray(header)
+    message.extend(fields)
+    align(message, 8)
+    message.extend(body)
+    return message
+
+
+def read_exact(connection: socket.socket, length: int) -> bytes:
+    result = bytearray()
+    while len(result) < length:
+        chunk = connection.recv(length - len(result))
+        if not chunk:
+            raise ConnectionError("The session D-Bus connection closed")
+        result.extend(chunk)
+    return bytes(result)
+
+
+def read_signature(data: bytes | bytearray, offset: int) -> tuple[str, int]:
+    length = data[offset]
+    offset += 1
+    value = data[offset : offset + length].decode("ascii")
+    if data[offset + length] != 0:
+        raise ValueError("Malformed D-Bus signature")
+    return value, offset + length + 1
+
+
+def read_string(data: bytes | bytearray, offset: int) -> tuple[str, int]:
+    offset += -offset % 4
+    length = struct.unpack_from("<I", data, offset)[0]
+    offset += 4
+    value = data[offset : offset + length].decode("utf-8")
+    if data[offset + length] != 0:
+        raise ValueError("Malformed D-Bus string")
+    return value, offset + length + 1
+
+
+def read_basic(data: bytes | bytearray, offset: int, signature: str) -> tuple[Any, int]:
+    offset += -offset % ALIGNMENT[signature]
+    formats = {
+        "y": "<B",
+        "n": "<h",
+        "q": "<H",
+        "b": "<I",
+        "i": "<i",
+        "u": "<I",
+        "x": "<q",
+        "t": "<Q",
+        "d": "<d",
+        "h": "<I",
+    }
+    if signature in ("s", "o"):
+        return read_string(data, offset)
+    if signature == "g":
+        return read_signature(data, offset)
+    fmt = formats.get(signature)
+    if fmt is None:
+        raise ValueError("Unsupported D-Bus value type: " + signature)
+    value = struct.unpack_from(fmt, data, offset)[0]
+    if signature == "b":
+        value = bool(value)
+    return value, offset + struct.calcsize(fmt)
+
+
+def type_end(signature: str, offset: int) -> int:
+    if offset >= len(signature):
+        raise ValueError("Incomplete D-Bus signature")
+    kind = signature[offset]
+    offset += 1
+    if kind == "a":
+        return type_end(signature, offset)
+    if kind in "({":
+        closing = ")" if kind == "(" else "}"
+        while offset < len(signature) and signature[offset] != closing:
+            offset = type_end(signature, offset)
+        if offset == len(signature):
+            raise ValueError("Malformed D-Bus signature")
+        return offset + 1
+    return offset
+
+
+def read_value(data: bytes | bytearray, offset: int, signature: str) -> tuple[Any, int]:
+    kind = signature[0]
+    if kind in "ybnqiuxthdsog":
+        return read_basic(data, offset, kind)
+    if kind == "v":
+        variant_signature, offset = read_signature(data, offset)
+        if len(variant_signature) != 1:
+            raise ValueError("Malformed D-Bus variant")
+        return read_value(data, offset, variant_signature)
+    if kind == "a":
+        offset += -offset % 4
+        length: int = struct.unpack_from("<I", data, offset)[0]
+        offset += 4
+        offset += -offset % ALIGNMENT[signature[1]]
+        end: int = offset + length
+        element_signature = signature[1:]
+        values = []
+        while offset < end:
+            value, offset = read_value(data, offset, element_signature)
+            values.append(value)
+        if offset != end:
+            raise ValueError("Malformed D-Bus array")
+        return values, offset
+    if kind == "(" or kind == "{":
+        offset += -offset % 8
+        closing = ")" if kind == "(" else "}"
+        parts = []
+        index = 1
+        while index < len(signature) and signature[index] != closing:
+            end = type_end(signature, index)
+            value, offset = read_value(data, offset, signature[index:end])
+            parts.append(value)
+            index = end
+        if index == len(signature):
+            raise ValueError("Malformed D-Bus container")
+        return tuple(parts), offset
+    raise ValueError("Unsupported D-Bus value type: " + kind)
+
+
+def read_message(connection: socket.socket) -> tuple[int, int, dict[int, Any], bytes]:
+    fixed = read_exact(connection, 16)
+    endian, message_type, _flags, version, body_length, serial, fields_length = (
+        struct.unpack("<BBBBIII", fixed)
+    )
+    if endian != ord("l") or version != 1:
+        raise ValueError("Only little-endian D-Bus messages are supported")
+    fields_data = read_exact(connection, fields_length)
+    padding_length = -(16 + fields_length) % 8
+    if padding_length:
+        read_exact(connection, padding_length)
+    body = read_exact(connection, body_length)
+
+    fields = {}
+    offset = 0
+    while offset < fields_length:
+        offset += -offset % 8
+        code = fields_data[offset]
+        offset += 1
+        variant_signature, offset = read_signature(fields_data, offset)
+        value, offset = read_value(fields_data, offset, variant_signature)
+        fields[code] = value
+    return message_type, serial, fields, body
+
+
+def parse_bus_address() -> socket.socket:
+    address = os.environ.get("DBUS_SESSION_BUS_ADDRESS")
+    if not address:
+        raise RuntimeError("DBUS_SESSION_BUS_ADDRESS is not set")
+
+    last_error = None
+    for candidate in address.split(";"):
+        if not candidate.startswith("unix:"):
+            continue
+        options = dict(
+            part.split("=", 1) for part in candidate[5:].split(",") if "=" in part
+        )
+        try:
+            connection = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            if "path" in options:
+                connection.connect(unquote(options["path"]))
+            elif "abstract" in options:
+                connection.connect("\0" + unquote(options["abstract"]))
+            else:
+                continue
+            return connection
+        except OSError as error:
+            last_error = error
+    raise RuntimeError("Could not connect to the session D-Bus") from last_error
+
+
+class SessionBus:
+    def __init__(self) -> None:
+        self.connection: socket.socket = parse_bus_address()
+        self.serial: int = 0
+        self.signals: list[tuple[dict[int, Any], bytes]] = []
+        self._authenticate()
+        self.call(
+            "/org/freedesktop/DBus",
+            "org.freedesktop.DBus",
+            "Hello",
+            "org.freedesktop.DBus",
+            "",
+            bytearray(),
+        )
+
+    def _authenticate(self) -> None:
+        self.connection.sendall(b"\0")
+        uid = str(os.getuid()).encode("ascii").hex().encode("ascii")
+        self.connection.sendall(b"AUTH EXTERNAL " + uid + b"\r\n")
+        while True:
+            response = bytearray()
+            while not response.endswith(b"\r\n"):
+                chunk = self.connection.recv(1)
+                if not chunk:
+                    raise ConnectionError("D-Bus authentication failed")
+                response.extend(chunk)
+            line = response.decode("ascii").strip()
+            if line.startswith("OK "):
+                self.connection.sendall(b"BEGIN\r\n")
+                return
+            if line.startswith("REJECTED"):
+                raise PermissionError("D-Bus rejected EXTERNAL authentication")
+
+    def call(
+        self,
+        path: str,
+        interface: str,
+        member: str,
+        destination: str,
+        signature: str,
+        body: bytearray,
+    ) -> tuple[dict[int, Any], bytes]:
+        self.serial += 1
+        serial = self.serial
+        message = make_message(
+            1, serial, path, interface, member, destination, signature, body
+        )
+        self.connection.sendall(message)
+        while True:
+            message_type, _message_serial, fields, response_body = read_message(
+                self.connection
+            )
+            if message_type == 4:
+                self.signals.append((fields, response_body))
+                continue
+            if fields.get(5) != serial:
+                continue
+            if message_type == 3:
+                error_name = fields.get(4, "D-Bus.Error.Failed")
+                detail = ""
+                if fields.get(8):
+                    detail = read_value(response_body, 0, fields[8])[0]
+                raise RuntimeError(error_name + (": " + detail if detail else ""))
+            return fields, response_body
+
+
+def wait_for_screenshot(bus: SessionBus, request_path: str) -> bytes:
+    for fields, body in bus.signals:
+        if fields.get(1) == request_path and fields.get(2) == REQUEST_INTERFACE:
+            return body
+    while True:
+        message_type, _serial, fields, body = read_message(bus.connection)
+        if (
+            message_type == 4
+            and fields.get(1) == request_path
+            and fields.get(2) == REQUEST_INTERFACE
+            and fields.get(3) == "Response"
+        ):
+            return body
+
+
+def take_screenshot(filename: str) -> None:
+    bus = SessionBus()
+    rule = (
+        "type='signal',sender='"
+        + PORTAL_NAME
+        + "',interface='"
+        + REQUEST_INTERFACE
+        + "',member='Response',path_namespace='"
+        + PORTAL_PATH
+        + "/request'"
+    )
+    match_body = bytearray()
+    append_string(match_body, rule)
+    bus.call(
+        "/org/freedesktop/DBus",
+        "org.freedesktop.DBus",
+        "AddMatch",
+        "org.freedesktop.DBus",
+        "s",
+        match_body,
+    )
+
+    options = bytearray()
+    align(options, 4)
+    array_length_offset = len(options)
+    options.extend(b"\0\0\0\0")
+    align(options, 8)
+    array_start = len(options)
+    for key, value_type, value in (
+        ("handle_token", "s", secrets.token_hex(16)),
+        ("interactive", "b", False),
+    ):
+        align(options, 8)
+        append_string(options, key)
+        append_variant(options, value_type, value)
+    struct.pack_into("<I", options, array_length_offset, len(options) - array_start)
+
+    body = bytearray()
+    append_string(body, "")
+    align(body, 4)
+    body.extend(options)
+    fields, response_body = bus.call(
+        PORTAL_PATH,
+        "org.freedesktop.portal.Screenshot",
+        "Screenshot",
+        PORTAL_NAME,
+        "sa{sv}",
+        body,
+    )
+    request_path = read_value(response_body, 0, fields[8])[0]
+    signal_body = wait_for_screenshot(bus, request_path)
+    response_code, offset = read_value(signal_body, 0, "u")
+    results, _offset = read_value(signal_body, offset, "a{sv}")
+
+    if response_code == 1:
+        raise RuntimeError("Screenshot was canceled")
+    if response_code != 0:
+        raise RuntimeError("Screenshot portal reported failure")
+    result_map = dict(results)
+    uri = result_map.get("uri")
+    if not isinstance(uri, str):
+        raise RuntimeError("Screenshot portal response did not include a URI")
+
+    with urlopen(uri) as screenshot, open(filename, "wb") as output:
+        while True:
+            chunk = screenshot.read(1024 * 1024)
+            if not chunk:
+                break
+            output.write(chunk)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Capture a screenshot using the freedesktop desktop portal."
+    )
+    parser.add_argument(
+        "-f",
+        "--filename",
+        help="file to write the screenshot to",
+        required=True,
+    )
+    args = parser.parse_args()
+    try:
+        take_screenshot(args.filename)
+    except (OSError, RuntimeError, ValueError, ConnectionError) as error:
+        print("portal_screenshot.py: " + str(error), file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

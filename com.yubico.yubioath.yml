@@ -36,8 +36,8 @@ modules:
       - /lib/libpcsclite.so
     sources:
       - type: archive
-        url: https://pcsclite.apdu.fr/files/pcsc-lite-2.5.2.tar.xz
-        sha256: 60a08942d8c00a1d86a3bf4c64eddbf7a5569c7c54f6904e3f07801bb5316acd
+        url: https://pcsclite.apdu.fr/files/pcsc-lite-2.5.3.tar.xz
+        sha256: fe2bb733ecf95e52768907eb00da9f9f3daf180960283e514a05dcc090afa3bd
         x-checker-data:
           type: anitya
           project-id: 2611
@@ -59,7 +59,8 @@ modules:
       - mv com.yubico.yubioath.appdata.xml /app/share/appdata/com.yubico.yubioath.appdata.xml
     sources:
       - type: archive
-        url: https://github.com/Yubico/yubioath-flutter/releases/download/7.4.1/yubico-authenticator-7.4.1-linux.tar.gz
+        url: 
+          https://github.com/Yubico/yubioath-flutter/releases/download/7.4.1/yubico-authenticator-7.4.1-linux.tar.gz
         sha256: 5c8f49cf3653ae9dd3911b53ca60475b03c8c957eb7385b1bd3d49ec4767ddac
         x-checker-data:
           type: json

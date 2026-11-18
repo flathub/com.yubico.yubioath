@@ -36,8 +36,8 @@ modules:
       - /lib/libpcsclite.so
     sources:
       - type: archive
-        url: https://pcsclite.apdu.fr/files/pcsc-lite-2.5.2.tar.xz
-        sha256: 60a08942d8c00a1d86a3bf4c64eddbf7a5569c7c54f6904e3f07801bb5316acd
+        url: https://pcsclite.apdu.fr/files/pcsc-lite-2.5.4.tar.xz
+        sha256: 23b1c644ab4f13269d3a9ff26734f473f622deff6ed60492171a9a25f603f078
         x-checker-data:
           type: anitya
           project-id: 2611
